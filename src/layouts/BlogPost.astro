@@ -1,0 +1,24 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { format } from 'date-fns';
+
+interface Props {
+	frontmatter: {
+		title: string;
+		description: string;
+		pubDate: string;
+		image?: string;
+	};
+}
+
+const { frontmatter } = Astro.props as Props;
+const formattedDate = format(new Date(frontmatter.pubDate), 'MMMM dd, yyyy');
+---
+
+<Layout title={frontmatter.title} description={frontmatter.description}>
+	<article class="prose lg:prose-xl">
+		<h1 class="text-3xl font-semibold text-primary mb-4">{frontmatter.title}</h1>
+		<p class="text-gray-500">Published: {formattedDate}</p>
+		<slot />
+	</article>
+</Layout>
